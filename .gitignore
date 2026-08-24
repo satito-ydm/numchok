@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# oh-my-claudecode runtime state (ไม่ใช่ส่วนหนึ่งของเว็บ)
+.omc/
+
+# logs / temp
+*.log
