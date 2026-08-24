@@ -631,6 +631,61 @@ section{padding:clamp(56px,7vw,104px) 0;position:relative}
 .gal figure:hover img{transform:scale(1.07)}
 .gal .tall{grid-row:span 2}
 .gal .wide{grid-column:span 2}
+/* ปุ่มครอบรูปเพื่อให้กด/แท็บ/กด Enter เปิดรูปใหญ่ได้ */
+.gal-btn{
+  display:block;width:100%;height:100%;padding:0;border:0;background:none;
+  cursor:zoom-in;font:inherit;
+}
+.gal figure::before{
+  content:"";position:absolute;inset:auto 10px 10px auto;width:30px;height:30px;
+  border-radius:50%;background:rgba(0,16,45,.55) center/15px no-repeat;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5M11 8v6M8 11h6'/%3E%3C/svg%3E");
+  opacity:0;transform:scale(.8);transition:.28s var(--ease);z-index:2;pointer-events:none;
+  backdrop-filter:blur(4px);
+}
+.gal figure:hover::before,.gal-btn:focus-visible + *,.gal figure:focus-within::before{opacity:1;transform:none}
+
+/* ---------- LIGHTBOX ---------- */
+.lb{
+  position:fixed;inset:0;z-index:200;display:grid;place-items:center;
+  background:rgba(0,16,45,.94);backdrop-filter:blur(10px);
+  padding:clamp(16px,4vw,48px);
+  opacity:0;transition:opacity .28s var(--ease);
+}
+.lb[hidden]{display:none}
+.lb.is-open{opacity:1}
+.lb-stage{margin:0;display:flex;flex-direction:column;align-items:center;gap:14px;max-width:100%}
+.lb-stage img{
+  display:block;border-radius:var(--r);background:var(--navy-900);
+  box-shadow:0 30px 80px rgba(0,0,0,.5);
+  max-width:100%;max-height:78vh;object-fit:contain;
+}
+.lb-stage figcaption{
+  color:rgba(255,255,255,.82);font-size:.94rem;line-height:1.6;
+  text-align:center;max-width:62ch;
+}
+.lb-btn{
+  position:absolute;display:grid;place-items:center;
+  width:50px;height:50px;border-radius:50%;cursor:pointer;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);
+  color:#fff;transition:.24s var(--ease);
+}
+.lb-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--navy-950)}
+.lb-btn svg{width:24px;height:24px}
+.lb-close{top:clamp(14px,3vw,26px);right:clamp(14px,3vw,26px)}
+.lb-prev{left:clamp(10px,2.5vw,26px);top:50%;margin-top:-25px}
+.lb-next{right:clamp(10px,2.5vw,26px);top:50%;margin-top:-25px}
+.lb-count{
+  position:absolute;bottom:clamp(14px,3vw,26px);left:50%;transform:translateX(-50%);
+  color:rgba(255,255,255,.66);font-size:.88rem;font-weight:600;letter-spacing:.06em;
+}
+@media (max-width:620px){
+  .lb-btn{width:42px;height:42px}
+  .lb-btn svg{width:20px;height:20px}
+  .lb-prev{left:6px}.lb-next{right:6px}
+  .lb-stage img{max-height:64vh}
+  .lb-stage figcaption{font-size:.86rem}
+}
 
 /* ---------- PRAYER ---------- */
 .prayer{background:var(--gold-50)}
@@ -1418,37 +1473,37 @@ section{padding:clamp(56px,7vw,104px) 0;position:relative}
 
     <div class="gal rv">
       <figure class="wide tall">
-        <picture><source type="image/webp" srcset="images/poipla-wat-thewarat-kunchorn-group.webp"><img decoding="async" src="images/poipla-wat-thewarat-kunchorn-group.jpg" loading="lazy" width="600" height="400"
-             alt="หมู่คณะร่วมปล่อยปลาหน้าเขียงที่ท่าน้ำวัดเทวราชกุญชร ริมแม่น้ำเจ้าพระยา"></picture>
+        <button class="gal-btn" type="button" aria-label="ดูรูปใหญ่: หมู่คณะร่วมปล่อยปลาหน้าเขียงที่ท่าน้ำวัดเทวราชกุญชร ริมแม่น้ำเจ้าพระยา"><picture><source type="image/webp" srcset="images/poipla-wat-thewarat-kunchorn-group.webp"><img decoding="async" src="images/poipla-wat-thewarat-kunchorn-group.jpg" loading="lazy" width="600" height="400"
+             alt="หมู่คณะร่วมปล่อยปลาหน้าเขียงที่ท่าน้ำวัดเทวราชกุญชร ริมแม่น้ำเจ้าพระยา"></picture></button>
       </figure>
       <figure>
-        <picture><source type="image/webp" srcset="images/pla-na-khiang-talad-thewarat.webp"><img decoding="async" src="images/pla-na-khiang-talad-thewarat.jpg" loading="lazy" width="600" height="400"
-             alt="ปลาหน้าเขียงหลากชนิดในตลาดเทวราช พร้อมป้ายราคาปลาช่อน ปลาดุก ปลาสวาย"></picture>
+        <button class="gal-btn" type="button" aria-label="ดูรูปใหญ่: ปลาหน้าเขียงหลากชนิดในตลาดเทวราช พร้อมป้ายราคาปลาช่อน ปลาดุก ปลาสวาย"><picture><source type="image/webp" srcset="images/pla-na-khiang-talad-thewarat.webp"><img decoding="async" src="images/pla-na-khiang-talad-thewarat.jpg" loading="lazy" width="600" height="400"
+             alt="ปลาหน้าเขียงหลากชนิดในตลาดเทวราช พร้อมป้ายราคาปลาช่อน ปลาดุก ปลาสวาย"></picture></button>
       </figure>
       <figure>
-        <picture><source type="image/webp" srcset="images/pla-poi-selection-bowls.webp"><img decoding="async" src="images/pla-poi-selection-bowls.jpg" loading="lazy" width="600" height="400"
-             alt="ปลาปล่อยจัดใส่กะละมังแยกชนิด ปลาดุก ปลาไหล ปลาทอง พร้อมปล่อย"></picture>
+        <button class="gal-btn" type="button" aria-label="ดูรูปใหญ่: ปลาปล่อยจัดใส่กะละมังแยกชนิด ปลาดุก ปลาไหล ปลาทอง พร้อมปล่อย"><picture><source type="image/webp" srcset="images/pla-poi-selection-bowls.webp"><img decoding="async" src="images/pla-poi-selection-bowls.jpg" loading="lazy" width="600" height="400"
+             alt="ปลาปล่อยจัดใส่กะละมังแยกชนิด ปลาดุก ปลาไหล ปลาทอง พร้อมปล่อย"></picture></button>
       </figure>
       <figure>
-        <picture><source type="image/webp" srcset="images/pla-na-khiang-baskets-tha-nam.webp"><img decoding="async" src="images/pla-na-khiang-baskets-tha-nam.jpg" loading="lazy" width="600" height="400"
-             alt="กระชังปลาหน้าเขียงเรียงรอปล่อยที่ท่าน้ำริมแม่น้ำเจ้าพระยา"></picture>
+        <button class="gal-btn" type="button" aria-label="ดูรูปใหญ่: กระชังปลาหน้าเขียงเรียงรอปล่อยที่ท่าน้ำริมแม่น้ำเจ้าพระยา"><picture><source type="image/webp" srcset="images/pla-na-khiang-baskets-tha-nam.webp"><img decoding="async" src="images/pla-na-khiang-baskets-tha-nam.jpg" loading="lazy" width="600" height="400"
+             alt="กระชังปลาหน้าเขียงเรียงรอปล่อยที่ท่าน้ำริมแม่น้ำเจ้าพระยา"></picture></button>
       </figure>
       <figure>
-        <picture><source type="image/webp" srcset="images/poipla-krachang-pla-na-khiang.webp"><img decoding="async" src="images/poipla-krachang-pla-na-khiang.jpg" loading="lazy" width="600" height="400"
-             alt="ลูกค้ากำลังเทปลาจากกระชังลงแม่น้ำเจ้าพระยาพร้อมดอกดาวเรือง"></picture>
+        <button class="gal-btn" type="button" aria-label="ดูรูปใหญ่: ลูกค้ากำลังเทปลาจากกระชังลงแม่น้ำเจ้าพระยาพร้อมดอกดาวเรือง"><picture><source type="image/webp" srcset="images/poipla-krachang-pla-na-khiang.webp"><img decoding="async" src="images/poipla-krachang-pla-na-khiang.jpg" loading="lazy" width="600" height="400"
+             alt="ลูกค้ากำลังเทปลาจากกระชังลงแม่น้ำเจ้าพระยาพร้อมดอกดาวเรือง"></picture></button>
       </figure>
       <figure class="wide">
-        <picture><source type="image/webp" srcset="images/poipla-wat-thewarat-pier.webp"><img decoding="async" src="images/poipla-wat-thewarat-pier.jpg" loading="lazy" width="600" height="400"
-             alt="บรรยากาศปล่อยปลาที่ท่าน้ำวัด ผู้ร่วมบุญยืนอธิษฐานก่อนปล่อยปลาลงน้ำ"></picture>
+        <button class="gal-btn" type="button" aria-label="ดูรูปใหญ่: บรรยากาศปล่อยปลาที่ท่าน้ำวัด ผู้ร่วมบุญยืนอธิษฐานก่อนปล่อยปลาลงน้ำ"><picture><source type="image/webp" srcset="images/poipla-wat-thewarat-pier.webp"><img decoding="async" src="images/poipla-wat-thewarat-pier.jpg" loading="lazy" width="600" height="400"
+             alt="บรรยากาศปล่อยปลาที่ท่าน้ำวัด ผู้ร่วมบุญยืนอธิษฐานก่อนปล่อยปลาลงน้ำ"></picture></button>
       </figure>
       <figure>
-        <picture><source type="image/webp" srcset="images/tham-bun-long-sop-ruamkatanyu.webp"><img decoding="async" src="images/tham-bun-long-sop-ruamkatanyu.jpg" loading="lazy" width="600" height="400"
-             alt="ทำบุญโลงศพ มูลนิธิร่วมกตัญญู สาขาวัดหัวลำโพง"></picture>
+        <button class="gal-btn" type="button" aria-label="ดูรูปใหญ่: ทำบุญโลงศพ มูลนิธิร่วมกตัญญู สาขาวัดหัวลำโพง"><picture><source type="image/webp" srcset="images/tham-bun-long-sop-ruamkatanyu.webp"><img decoding="async" src="images/tham-bun-long-sop-ruamkatanyu.jpg" loading="lazy" width="600" height="400"
+             alt="ทำบุญโลงศพ มูลนิธิร่วมกตัญญู สาขาวัดหัวลำโพง"></picture></button>
       </figure>
       <figure>
-        <picture><source type="image/webp" srcset="images/gallery-pla-na-khiang-grid-sm.webp 760w, images/gallery-pla-na-khiang-grid.webp 1400w" sizes="(max-width:620px) 92vw, 25vw"><img decoding="async" src="images/gallery-pla-na-khiang-grid.jpg" loading="lazy" width="1402" height="1122"
+        <button class="gal-btn" type="button" aria-label="ดูรูปใหญ่: รวมภาพปลาหน้าเขียงพร้อมปล่อย ปลาสวาย ปลาไหล ปลาดุก ปลานิล กุ้ง โดยปล่อยปลานำโชค"><picture><source type="image/webp" srcset="images/gallery-pla-na-khiang-grid-sm.webp 760w, images/gallery-pla-na-khiang-grid.webp 1400w" sizes="(max-width:620px) 92vw, 25vw"><img decoding="async" src="images/gallery-pla-na-khiang-grid.jpg" loading="lazy" width="1402" height="1122"
              style="object-position:center 32%"
-             alt="รวมภาพปลาหน้าเขียงพร้อมปล่อย ปลาสวาย ปลาไหล ปลาดุก ปลานิล กุ้ง โดยปล่อยปลานำโชค"></picture>
+             alt="รวมภาพปลาหน้าเขียงพร้อมปล่อย ปลาสวาย ปลาไหล ปลาดุก ปลานิล กุ้ง โดยปล่อยปลานำโชค"></picture></button>
       </figure>
     </div>
   </div>
@@ -1564,6 +1619,24 @@ section{padding:clamp(56px,7vw,104px) 0;position:relative}
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.5 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
     <span class="lbl">ทักเฟซบุ๊ก</span>
   </a>
+</div>
+
+<!-- ============ LIGHTBOX (ดูรูปใหญ่) ============ -->
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="ดูรูปขนาดใหญ่" hidden>
+  <button class="lb-btn lb-close" id="lbClose" type="button" aria-label="ปิด">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <button class="lb-btn lb-prev" id="lbPrev" type="button" aria-label="รูปก่อนหน้า">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+  </button>
+  <button class="lb-btn lb-next" id="lbNext" type="button" aria-label="รูปถัดไป">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+  </button>
+  <figure class="lb-stage">
+    <img id="lbImg" alt="">
+    <figcaption id="lbCap"></figcaption>
+  </figure>
+  <span class="lb-count" id="lbCount"></span>
 </div>
 
 <!-- ============ STICKY MOBILE CTA ============ -->
@@ -1783,6 +1856,97 @@ section{padding:clamp(56px,7vw,104px) 0;position:relative}
         else if (k === 'End') next = tabs.length - 1;
         if (next !== null){ e.preventDefault(); select(next, true); }
       });
+    });
+  })();
+
+  /* ============================================================
+     LIGHTBOX: กดรูปในแกลเลอรีเพื่อดูขนาดใหญ่
+     - เลือกไฟล์ที่ใหญ่ที่สุดจาก srcset และไม่ขยายเกิน 1.9 เท่าของความละเอียดจริง
+       (รูปส่วนใหญ่ต้นฉบับ 600x400 ถ้าดันเต็มจอจะเบลอ)
+     - รองรับ Esc / ลูกศรซ้าย-ขวา / กดพื้นหลัง และวนโฟกัสอยู่ในกล่อง
+     ============================================================ */
+  (function(){
+    var lb    = document.getElementById('lightbox');
+    var img   = document.getElementById('lbImg');
+    var cap   = document.getElementById('lbCap');
+    var count = document.getElementById('lbCount');
+    var btns  = [].slice.call(document.querySelectorAll('.gal-btn'));
+    if (!lb || !img || !btns.length) return;
+
+    var controls = [].slice.call(lb.querySelectorAll('.lb-btn'));
+    var idx = 0, opener = null;
+
+    /* เลือก URL ที่ใหญ่ที่สุดที่มีให้ */
+    function bestSrc(btn){
+      var src = btn.querySelector('source');
+      var el  = btn.querySelector('img');
+      if (src){
+        var cands = src.getAttribute('srcset').split(',').map(function(c){
+          var bits = c.trim().split(/\s+/);
+          return { url: bits[0], w: parseInt(bits[1] || '0', 10) };
+        });
+        cands.sort(function(a,b){ return b.w - a.w; });
+        if (cands[0] && cands[0].url) return cands[0].url;
+      }
+      return el.currentSrc || el.src;
+    }
+
+    function show(i){
+      idx = (i + btns.length) % btns.length;
+      var btn = btns[idx];
+      var alt = btn.querySelector('img').getAttribute('alt') || '';
+      img.src = bestSrc(btn);
+      img.alt = alt;
+      cap.textContent = alt;
+      count.textContent = (idx + 1) + ' / ' + btns.length;
+      img.style.width = '';
+      img.onload = function(){
+        /* ไม่ขยายเกิน 1.9x ของความละเอียดจริง กันภาพแตก */
+        var cap2 = Math.round(img.naturalWidth * 1.9);
+        img.style.width = 'min(100%, ' + cap2 + 'px)';
+      };
+    }
+
+    function open(i, from){
+      opener = from || null;
+      lb.hidden = false;
+      show(i);
+      requestAnimationFrame(function(){ lb.classList.add('is-open'); });
+      document.body.style.overflow = 'hidden';
+      document.getElementById('lbClose').focus();
+    }
+
+    function close(){
+      lb.classList.remove('is-open');
+      document.body.style.overflow = '';
+      var done = function(){ lb.hidden = true; img.removeAttribute('src'); };
+      setTimeout(done, 220);
+      if (opener) opener.focus();
+    }
+
+    btns.forEach(function(b, i){
+      b.addEventListener('click', function(){ open(i, b); });
+    });
+    document.getElementById('lbClose').addEventListener('click', close);
+    document.getElementById('lbPrev').addEventListener('click', function(){ show(idx - 1); });
+    document.getElementById('lbNext').addEventListener('click', function(){ show(idx + 1); });
+
+    /* กดพื้นหลัง (ไม่ใช่ตัวรูป/ปุ่ม) เพื่อปิด */
+    lb.addEventListener('click', function(e){
+      if (e.target === lb || e.target.classList.contains('lb-stage')) close();
+    });
+
+    document.addEventListener('keydown', function(e){
+      if (lb.hidden) return;
+      if (e.key === 'Escape'){ e.preventDefault(); close(); }
+      else if (e.key === 'ArrowLeft'){ e.preventDefault(); show(idx - 1); }
+      else if (e.key === 'ArrowRight'){ e.preventDefault(); show(idx + 1); }
+      else if (e.key === 'Tab'){
+        /* วนโฟกัสอยู่แค่ในกล่อง */
+        var first = controls[0], last = controls[controls.length - 1];
+        if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+      }
     });
   })();
 
